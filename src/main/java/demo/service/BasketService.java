@@ -22,11 +22,7 @@ public class BasketService {
 	}
 	
 	public void addToBasket() {
-		
-		// loop until user cancels 
-		while(userInput.getIntInput() != CANCELED) {
-			itemService.addItem();
-		}
+	
 		
 	}
 	

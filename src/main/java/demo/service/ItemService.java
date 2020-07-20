@@ -14,6 +14,8 @@ public class ItemService {
 	private Screen screen; 
 	private Item item; 
 	
+	private static final String CANCELED = "stop"; 
+	
 	public ItemService() {
 		items = new ArrayList<>();
 		screen = new Screen(); 
@@ -22,18 +24,26 @@ public class ItemService {
 	}
 		
 	public void addItem() {
-		screen.displayMessageLine("Enter new item.\nEnter item sku: ");
-		String sku = userInput.getSkuInput(); 
-		
-		if(!itemExists(sku)) {
-			screen.displayMessageLine("\nEnter price for: " + sku + " in Pence: ");
-			double unitPrice = userInput.getIntInput(); 
-			addItemToList(sku, unitPrice);
-		}
-		else {
-			screen.displayMessage("Item with SKU " + item.getSku() + " already exists.\nEnter new item or press exit.");
-			return; // exiting
-		}
+		while(true) {
+			screen.displayMessageLine("Enter new item.\nEnter item sku: ");
+			String sku = userInput.getSkuInput();
+			
+			if(!sku.equalsIgnoreCase(CANCELED)) {
+				
+				if(!itemExists(sku)) {
+					screen.displayMessageLine("\nEnter price for: " + sku + " in Pence: ");
+					double unitPrice = userInput.getIntInput(); 
+					addItemToList(sku, unitPrice);
+				}
+				else {
+					screen.displayMessage("Item with SKU " + item.getSku() + " already exists.\nEnter new item or press 1 to Cancel.");
+				}
+			}
+			else {
+				screen.displayMessageLine("\nCanceling...");
+				return; // return to main menu
+			}
+		} 
 	}
 
 	private void addItemToList(String sku, double unitPrice) {

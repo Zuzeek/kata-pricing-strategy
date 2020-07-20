@@ -15,7 +15,7 @@ public class UserInput {
 	}
 	
 	public String getSkuInput() {
-		return sc.nextLine();
+		return sc.next();
 	}
 	
 	public int getIntInput() {
