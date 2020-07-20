@@ -9,18 +9,25 @@ import demo.model.UserInput;
 
 public class ItemService {
 	
-	private List<Item> items = new ArrayList<>(); 
+	private List<Item> items;  
 	private UserInput userInput; 
 	private Screen screen; 
 	private Item item; 
+	
+	public ItemService() {
+		items = new ArrayList<>();
+		screen = new Screen(); 
+		userInput = new UserInput(); 
+		item = new Item(); 
+	}
 		
-	public void addItem(String sku, double unitPrice) {
+	public void addItem() {
 		screen.displayMessageLine("Enter new item.\nEnter item sku: ");
-		sku = userInput.getSkuInput(); 
+		String sku = userInput.getSkuInput(); 
 		
 		if(!itemExists(sku)) {
 			screen.displayMessageLine("\nEnter price for: " + sku + " in Pence: ");
-			unitPrice = userInput.getIntInput(); 
+			double unitPrice = userInput.getIntInput(); 
 			addItemToList(sku, unitPrice);
 		}
 		else {

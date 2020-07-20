@@ -15,21 +15,15 @@ public class UserInput {
 	}
 	
 	public String getSkuInput() {
-		// loop until user inputs sku 
-		do {
-			screen.displayMessageLine("Incorrect SKU, enter correct SKU");
-			return sc.nextLine();
-		}
-		while(!sc.hasNext(REGEX_SKU)); 
+		return sc.nextLine();
 	}
 	
 	public int getIntInput() {
-		do {
-			screen.displayMessageLine("Not a number, enter correct value");
-			return sc.nextInt();
-		}
-		while (!sc.hasNext(REGEX_INT));
+		return sc.nextInt();
+//		do {
+//			screen.displayMessageLine("Not a number, enter correct value");
+//			return sc.nextInt();
+//		}
+//		while (!sc.hasNext(REGEX_INT));
 	}
-	
-
 }

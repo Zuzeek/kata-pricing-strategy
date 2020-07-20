@@ -1,4 +1,4 @@
-package demo.pricing.strategy;
+package demo;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,8 +15,8 @@ public class TestItemService {
 	
 	@Test
 	public void givenItemExistsWhenAddedToTheListThenReturnItBack() {
-		itemService.addItem("A", 50);
-		itemService.addItem("B", 30);
+//		itemService.addItem("A", 50);
+//		itemService.addItem("B", 30);
 		
 		List<Item> items = itemService.getItems(); 
 		
