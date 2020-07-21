@@ -31,7 +31,7 @@ public class PricingSchemeService {
 	
 	public void addPricingScheme(){
 		while(true) {
-			screen.displayMessageLine("Enter pricing scheme.\nEnter item sku: ");
+			screen.displayMessageLine("Enter pricing scheme:\nEnter item sku: ");
 			sku = userInput.getSkuInput(); 
 			
 			if(!sku.equalsIgnoreCase(CANCELED)) {
