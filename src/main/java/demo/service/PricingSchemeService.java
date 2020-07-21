@@ -12,7 +12,7 @@ public class PricingSchemeService {
 	
 	private String sku; 
 	private int quantity;
-	private double specialPrice; 
+	private int specialPrice; 
 	
 	private List<PricingScheme> pricingSchemeItems; 
 	private PricingScheme pricingScheme; 
@@ -56,7 +56,7 @@ public class PricingSchemeService {
 		} 
 	}
 
-	private void addPricingSchemeToList(String sku, int quantity, double specialPrice) {
+	private void addPricingSchemeToList(String sku, int quantity, int specialPrice) {
 		pricingScheme = new PricingScheme(sku, quantity, specialPrice); 
 		pricingSchemeItems.add(pricingScheme);
 	}

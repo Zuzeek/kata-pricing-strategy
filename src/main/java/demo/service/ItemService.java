@@ -10,7 +10,7 @@ import demo.model.UserInput;
 public class ItemService {
 	
 	private String sku; 
-	private double unitPrice; 
+	private int unitPrice; 
 	
 	private List<Item> items;  
 	private UserInput userInput; 
@@ -49,7 +49,7 @@ public class ItemService {
 		} 
 	}
 	
-	public void addItemToList(String sku, double unitPrice) {
+	public void addItemToList(String sku, int unitPrice) {
 		item = new Item(sku, unitPrice); 
 		items.add(item); 		
 	}
@@ -82,7 +82,7 @@ public class ItemService {
 		return items; 
 	}
 	
-	public double getItemUnitPrice(String sku) {
+	public int getItemUnitPrice(String sku) {
 		return getItem(sku).getUnitPrice(); 
 	}
 }

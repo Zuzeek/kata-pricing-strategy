@@ -20,10 +20,5 @@ public class UserInput {
 	
 	public int getIntInput() {
 		return sc.nextInt();
-//		do {
-//			screen.displayMessageLine("Not a number, enter correct value");
-//			return sc.nextInt();
-//		}
-//		while (!sc.hasNext(REGEX_INT));
 	}
 }

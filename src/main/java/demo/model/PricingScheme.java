@@ -4,11 +4,11 @@ public class PricingScheme {
 	
 	private String sku; 
 	private int quantity; 
-	private double specialPrice;
+	private int specialPrice;
 	
 	public PricingScheme() {}
 	
-	public PricingScheme(String sku, int quantity, double specialPrice) {
+	public PricingScheme(String sku, int quantity, int specialPrice) {
 		this.sku = sku;
 		this.quantity = quantity;
 		this.specialPrice = specialPrice;
@@ -30,11 +30,11 @@ public class PricingScheme {
 		this.quantity = quantity;
 	}
 	
-	public double getSpecialPrice() {
+	public int getSpecialPrice() {
 		return specialPrice;
 	}
 	
-	public void setSpecialPrice(double specialPrice) {
+	public void setSpecialPrice(int specialPrice) {
 		this.specialPrice = specialPrice;
 	} 
 	

@@ -3,11 +3,11 @@ package demo.model;
 public class Item {
 	
 	private String sku; 
-	private Double unitPrice;
+	private int unitPrice;
 		
 	public Item() {}
 
-	public Item(String sku, Double unitPrice) {
+	public Item(String sku, int unitPrice) {
 		this.sku = sku;
 		this.unitPrice = unitPrice;
 	}
@@ -28,11 +28,11 @@ public class Item {
 		this.sku = sku;
 	}
 
-	public Double getUnitPrice() {
+	public int getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(Double unitPrice) {
+	public void setUnitPrice(int unitPrice) {
 		this.unitPrice = unitPrice;
 	} 
 	
