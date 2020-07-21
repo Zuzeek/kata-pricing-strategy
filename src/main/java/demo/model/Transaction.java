@@ -2,16 +2,16 @@ package demo.model;
 
 public abstract class Transaction {
 	
-	private String sku; 
+	private UserInput userInput; 
 	private Screen screen; 
 
-	public Transaction(String sku, Screen screen) {
-		this.sku = sku;
+	public Transaction(UserInput userInput, Screen screen) {
+		this.userInput = userInput;
 		this.screen = screen;
 	}
 
-	public String getSku() {
-		return sku;
+	public UserInput getUserInput() {
+		return userInput;
 	}
 
 	public Screen getScreen() {

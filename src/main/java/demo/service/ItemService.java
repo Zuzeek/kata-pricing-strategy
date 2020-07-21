@@ -9,6 +9,9 @@ import demo.model.UserInput;
 
 public class ItemService {
 	
+	private String sku; 
+	private double unitPrice; 
+	
 	private List<Item> items;  
 	private UserInput userInput; 
 	private Screen screen; 
@@ -26,13 +29,13 @@ public class ItemService {
 	public void addItem() {
 		while(true) {
 			screen.displayMessageLine("Enter new item.\nEnter item sku: ");
-			String sku = userInput.getSkuInput();
+			sku = userInput.getSkuInput();
 			
 			if(!sku.equalsIgnoreCase(CANCELED)) {
 				
 				if(!itemExists(sku)) {
 					screen.displayMessageLine("\nEnter price for: " + sku + " in Pence: ");
-					double unitPrice = userInput.getIntInput(); 
+					unitPrice = userInput.getIntInput(); 
 					addItemToList(sku, unitPrice);
 				}
 				else {
@@ -45,8 +48,8 @@ public class ItemService {
 			}
 		} 
 	}
-
-	private void addItemToList(String sku, double unitPrice) {
+	
+	public void addItemToList(String sku, double unitPrice) {
 		item = new Item(sku, unitPrice); 
 		items.add(item); 		
 	}

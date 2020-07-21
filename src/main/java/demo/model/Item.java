@@ -12,7 +12,7 @@ public class Item {
 		this.unitPrice = unitPrice;
 	}
 
-	// not needed -> moved to service 
+	// -> move logic to service 
 	public boolean validateSku(String userSku) {
 		if(userSku == sku) 
 			return true;

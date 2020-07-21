@@ -10,38 +10,63 @@ import demo.model.UserInput;
 
 public class PricingSchemeService {
 	
-	private List<PricingScheme> pricingSchemeItems = new ArrayList<>(); 
+	private String sku; 
+	private int quantity;
+	private double specialPrice; 
+	
+	private List<PricingScheme> pricingSchemeItems; 
+	private PricingScheme pricingScheme; 
 	private Item item; 
-	private Screen screen; 
-	private UserInput userInput; 
+	Screen screen; 
+	UserInput userInput;
 	
-	private static final String CANCELED = "exit"; 
+	private static final String CANCELED = "stop"; 
 	
-	public List<PricingScheme> getPricingSchemeList() {
-		return pricingSchemeItems; 
+	public PricingSchemeService() {
+		pricingSchemeItems = new ArrayList<>(); 
+		item = new Item();
+		screen = new Screen(); 
+		userInput = new UserInput();		
 	}
 	
-	public void addPricingScheme(String sku, int quantity, double specialPrice) {
-		screen.displayMessageLine("Enter pricing scheme.\nEnter item sku: ");
-		userInput.getSkuInput(); 
-		
-		PricingScheme availableScheme = isMulitpriced(sku); 
-		
-		// loop until user cancel's 
-		do {
-			// check if available sku 
-			if(!userInput.getSkuInput().equals(null)) {
-				
+	public void addPricingScheme(){
+		while(true) {
+			screen.displayMessageLine("Enter pricing scheme.\nEnter item sku: ");
+			sku = userInput.getSkuInput(); 
+			
+			if(!sku.equalsIgnoreCase(CANCELED)) {
+				if(item.validateSku(sku)) {
+					
+					screen.displayMessageLine("\nEnter quantity: ");
+					quantity = userInput.getIntInput(); 
+					
+					screen.displayMessageLine("\nEnter price (in Pence): ");
+					specialPrice = userInput.getIntInput(); 
+					
+					addPricingSchemeToList(sku, quantity, specialPrice);
+				}
+				else {
+					screen.displayMessage("Item does not exists.\nEnter existing item or type 'stop'.");
+				}
 			}
-			
-			
-			return; // return to main menu 
-		} while (!userInput.getSkuInput().equalsIgnoreCase(CANCELED)); 
-	
+			else {
+				screen.displayMessageLine("\nCanceling...");
+				return; // return to main menu
+			}
+		} 
+	}
+
+	private void addPricingSchemeToList(String sku, int quantity, double specialPrice) {
+		pricingScheme = new PricingScheme(sku, quantity, specialPrice); 
+		pricingSchemeItems.add(pricingScheme);
 	}
 
 	public PricingScheme isMulitpriced(String sku) {
 
 		return null;
+	}
+	
+	public List<PricingScheme> getPricingSchemeList() {
+		return pricingSchemeItems; 
 	}
 }
