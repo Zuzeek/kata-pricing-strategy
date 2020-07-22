@@ -1,7 +1,6 @@
 package demo.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,25 +17,47 @@ public class PriceManagerService {
 	private ItemService itemService; 
 	private PricingSchemeService pricingSchemeService; 
 	private BasketService basketService; 
-	private Item item; 
 		
 	private List<String> itemsInBasket; 
 	private List<Item> availableItems; 
 	private List<PricingScheme> availableScheme; 
 	
 	public PriceManagerService() {
-		this.totalPrice = 0.0; 
 		itemsInBasket = new ArrayList<>(); 
+		availableItems = new ArrayList<>(); 
+		availableScheme = new ArrayList<>(); 
 	}
 	
-	public void getTotalPrice() {
+	public double getTotalPrice() {
 		getAvailableItems();
-		getAvailablePricingStrategy();
-		basketService.addItem();
+		getAvailablePricingStrategy(); 
+		getItemsInBasket(); 
 		
+		Item itemOccurance = (Item) fetchItemsOccuranceInBasket(); 
+		PricingScheme schemeOccurance = fetchPricingScheme(itemOccurance); 
 		
+		double totalPrice = getTotalRunningPrice(itemOccurance); 
+		return totalPrice; 
 	}
 	
+
+	public double getTotalRunningPrice(Item scannedItem) {
+		totalPrice += scannedItem.getUnitPrice(); 
+		return totalPrice / 100; // to get price in GBP 
+	}	 
+	
+	public PricingScheme fetchPricingScheme(Item inputItem) {
+		PricingScheme singlePricingScheme = null; 
+		
+		String inputSku = inputItem.getSku(); 
+		for(PricingScheme scheme: availableScheme) {
+			if(scheme.getSku().equalsIgnoreCase(inputSku)){
+				singlePricingScheme = scheme; 
+			}
+		}
+		return singlePricingScheme; 
+	}
+		
 	public Map<Object, Long> fetchItemsOccuranceInBasket() {
 		return basketService.getItemsInBasket()
 				.stream()
@@ -45,110 +66,24 @@ public class PriceManagerService {
 							.toString()
 							.toLowerCase(),
 					Collectors.counting()));
-
 	}
 	
-	public double getPrice(Item scannedItem, PricingScheme pricingScheme) {
-		getAvailableItems();
-		int occurences = Collections.frequency(itemsInBasket, scannedItem.getSku()); // return number of occurences of the sku
-		
-		
-		return totalPrice; 
-	}
-
-	public double getTotalRunningPrice(Item scannedItem) {
-		totalPrice += scannedItem.getUnitPrice(); 
-		return totalPrice / 100; // to get price in GBP 
-	}
-	
-	public void getAvailableItems() {
+	public List<Item> getAvailableItems() {
 		itemService = new ItemService(); 
 		availableItems = itemService.getItems(); 
+		return availableItems; 
 	}
 	
-	public void getAvailablePricingStrategy() {
+	public List<PricingScheme> getAvailablePricingStrategy() {
 		pricingSchemeService = new PricingSchemeService(); 
 		availableScheme = pricingSchemeService.getPricingSchemeList(); 
+		return availableScheme;
 	}
 
-	public boolean isMultipriced(String sku) {
-
-		return true;
+	public List<String> getItemsInBasket() {
+		basketService = new BasketService(); 
+		itemsInBasket = basketService.getItemsInBasket(); 
+		return itemsInBasket; 
 	}
+	
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	public double getTotalPrice(Item scannedItem) {		
-//		double totalPrice = 0.0; 
-//		
-//		for (int i = 0; i < basketService.getTotalItemsInBasket(); i++) {
-//			
-//			!pricingScheme.equals(null) && 
-//			
-//			if(scannedItem.getSku().equals(pricingScheme.getSku())) {
-//				if() {
-//					double specialPrice = scannedItem.getUnitPrice() * (pricingScheme.getQuantity() - 1);
-//				}
-//			}
-//			else {
-//				screen.displayMessageLine("input valid item");
-//			}
-//		}
-//			
-//	}
-//
-//	public double getTotalRunningPrice(Item scannedItem, PricingScheme pricingScheme) {
-//		runningPrice = 0.0; 
-//		for(int i = 0; i < getTotalItemsInBasket(); i++) {
-//			basketItems = 
-//		}
-//		
-//		runningPrice += scannedItem.getUnitPrice(); 
-//		return runningPrice;
-//	}
-//	
-//	public void refreshRunningTotalPrice() {
-//		
-//	}
-//	
-//	public double getTotalCost() {
-//	    double totalPrice = 0.0;
-//	    for (int i = 0; i < basketService.getTotalItemsInBasket(); i++) {
-//	    	Item item = basketService.getItemsInBasket().get(i); 
-//	    	totalPrice += item.getUnitPrice() * item.getQuantity();
-//	    }
-//	    return totalPrice;
-//	}
-

@@ -1,13 +1,8 @@
 package demo.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import demo.model.Basket;
-import demo.model.Item;
-import demo.model.PricingScheme;
 import demo.model.Screen;
 import demo.model.UserInput;
 
@@ -16,21 +11,16 @@ public class BasketService {
 	private static final String CANCELED = "exit"; 
 	private String sku; 
 	
-	private List<Basket> basketItems = new ArrayList<>(); 
-	
-	private ItemService itemService; 
-	private PricingSchemeService pricingSchemeService; 
 	private Screen screen; 
-	private UserInput userInput; 
+	private UserInput userInput;
 	
-	private List<String> scannedItems; 
-	private List<Item> availableItems; 
-	private List<PricingScheme> availableScheme; 
+	private List<String> basketItems; 
+
 	
 	public BasketService() {
-		scannedItems = new ArrayList<>();
-		availableItems = new ArrayList<>();
-		availableScheme = new ArrayList<>(); 
+		screen = new Screen(); 
+		userInput = new UserInput(); 
+		basketItems = new ArrayList<>();
 	}
 	
 	public void addItem() {
@@ -39,12 +29,7 @@ public class BasketService {
 			sku = userInput.getStringInput();
 			
 			if(!sku.equalsIgnoreCase(CANCELED)) {
-				if(itemService.itemExists(sku)) {
 					addItemToBasket(sku);
-				}
-				else {
-					screen.displayMessage("Item with SKU does not exists.\nEnter new item or press 'stop' to Cancel.");
-				}
 			}
 			else {
 				screen.displayMessageLine("\nCanceling...");
@@ -54,11 +39,11 @@ public class BasketService {
 	}
 	
 	private void addItemToBasket(String sku) {
-		scannedItems.add(sku); 
+		basketItems.add(sku); 
 	}
 	
 	public List<String> getItemsInBasket(){
-		return scannedItems; 
+		return basketItems; 
 	}
 	
 	public int getTotalItemsInBasket() {

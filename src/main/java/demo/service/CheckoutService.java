@@ -4,13 +4,12 @@ public class CheckoutService {
 	
 	private ItemService itemServie; 
 	private PricingSchemeService pricingSchemeService;
-	private BasketService basketService; 
 	private PriceManagerService priceManagerService; 
+	private BasketService basketService; 
 		
 	public CheckoutService() {
 		itemServie = new ItemService();
 		pricingSchemeService = new PricingSchemeService();
-		basketService = new BasketService(); 
 		priceManagerService = new PriceManagerService();
 	}
 
