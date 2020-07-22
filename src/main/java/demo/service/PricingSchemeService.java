@@ -14,28 +14,29 @@ public class PricingSchemeService {
 	private int quantity;
 	private int specialPrice; 
 	
-	private List<PricingScheme> pricingSchemeItems; 
+	private List<PricingScheme> pricingSchemeList; 
 	private PricingScheme pricingScheme; 
-	private Item item; 
+	private ItemService itemService; 
+	
 	Screen screen; 
 	UserInput userInput;
 	
-	private static final String CANCELED = "stop"; 
+	private static final String CANCELED = "exit"; 
 	
 	public PricingSchemeService() {
-		pricingSchemeItems = new ArrayList<>(); 
-		item = new Item();
+		pricingSchemeList = new ArrayList<>(); 
+		pricingScheme = new PricingScheme(); 
 		screen = new Screen(); 
 		userInput = new UserInput();		
 	}
 	
 	public void addPricingScheme(){
 		while(true) {
-			screen.displayMessageLine("Enter pricing scheme:\nEnter item sku: ");
-			sku = userInput.getSkuInput(); 
+			screen.displayMessageLine("Enter pricing scheme or type 'exit' to stop:\nEnter item sku: ");
+			sku = userInput.getStringInput(); 
 			
 			if(!sku.equalsIgnoreCase(CANCELED)) {
-				if(item.validateSku(sku)) {
+				if(!pricingSchemeExists(sku)) {
 					
 					screen.displayMessageLine("\nEnter quantity: ");
 					quantity = userInput.getIntInput(); 
@@ -55,18 +56,36 @@ public class PricingSchemeService {
 			}
 		} 
 	}
+	
+	public boolean pricingSchemeExists(String sku) {
+		pricingScheme = getScheme(sku); 
+		
+		if (pricingScheme != null) {
+			return true; 
+		}
+		else
+			return false; 
+	}
+
+	// fetch scheme obj 
+	private PricingScheme getScheme(String sku) {
+		pricingScheme = null; 
+		
+		for (PricingScheme temp: pricingSchemeList) {
+			if(sku.equalsIgnoreCase(temp.getSku())) {
+				pricingScheme = temp; 
+			}
+		}
+		return pricingScheme;
+	}
 
 	private void addPricingSchemeToList(String sku, int quantity, int specialPrice) {
 		pricingScheme = new PricingScheme(sku, quantity, specialPrice); 
-		pricingSchemeItems.add(pricingScheme);
+		pricingSchemeList.add(pricingScheme);
 	}
 
-	public PricingScheme isMulitpriced(String sku) {
-
-		return null;
+	public List<PricingScheme> getPricingSchemeList() {
+		return pricingSchemeList; 
 	}
 	
-	public List<PricingScheme> getPricingSchemeList() {
-		return pricingSchemeItems; 
-	}
 }

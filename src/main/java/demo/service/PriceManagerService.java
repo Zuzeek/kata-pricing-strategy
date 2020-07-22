@@ -17,6 +17,7 @@ public class PriceManagerService {
 	
 	private ItemService itemService; 
 	private PricingSchemeService pricingSchemeService; 
+	private BasketService basketService; 
 	private Item item; 
 		
 	private List<String> itemsInBasket; 
@@ -28,20 +29,23 @@ public class PriceManagerService {
 		itemsInBasket = new ArrayList<>(); 
 	}
 	
-	public void getTotalPrice(String sku) {
-		// TODO Auto-generated method stub
+	public void getTotalPrice() {
+		getAvailableItems();
+		getAvailablePricingStrategy();
+		basketService.addItem();
+		
 		
 	}
 	
-	public void fetchPricingSchemeItemsOccurance() {
-		Map<Object, Long> countMap = getItemsInBasket()
-									.stream()
-									.collect(
-										Collectors.groupingBy(
-												e -> e.toString()
-												.toLowerCase(),
-										Collectors.counting()));
-		System.out.println(countMap);
+	public Map<Object, Long> fetchItemsOccuranceInBasket() {
+		return basketService.getItemsInBasket()
+				.stream()
+				.collect(
+					Collectors.groupingBy(item -> item
+							.toString()
+							.toLowerCase(),
+					Collectors.counting()));
+
 	}
 	
 	public double getPrice(Item scannedItem, PricingScheme pricingScheme) {
@@ -56,18 +60,6 @@ public class PriceManagerService {
 		totalPrice += scannedItem.getUnitPrice(); 
 		return totalPrice / 100; // to get price in GBP 
 	}
-
-	public void addItemToBasket(String sku) {
-		itemsInBasket.add(sku); 
-	}
-	
-	public List<String> getItemsInBasket(){
-		return itemsInBasket; 
-	}
-	
-	public int getTotalItemsInBasket() {
-		return itemsInBasket.size(); 
-	}
 	
 	public void getAvailableItems() {
 		itemService = new ItemService(); 
@@ -79,7 +71,10 @@ public class PriceManagerService {
 		availableScheme = pricingSchemeService.getPricingSchemeList(); 
 	}
 
+	public boolean isMultipriced(String sku) {
 
+		return true;
+	}
 }
 	
 	

@@ -20,7 +20,7 @@ public class CheckoutController {
 	}
 
 	private void performAction() {
-		checkoutService.addScannedItem();		
+		checkoutService.checkout();		
 	}
 	
 	

@@ -14,11 +14,12 @@ public class UserInput {
 		sc = new Scanner(System.in); 
 	}
 	
-	public String getSkuInput() {
+	public String getStringInput() {
 		return sc.next();
 	}
 	
 	public int getIntInput() {
 		return sc.nextInt();
 	}
+	
 }

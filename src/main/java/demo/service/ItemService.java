@@ -17,7 +17,7 @@ public class ItemService {
 	private Screen screen; 
 	private Item item; 
 	
-	private static final String CANCELED = "stop"; 
+	private static final String CANCELED = "exit"; 
 	
 	public ItemService() {
 		items = new ArrayList<>();
@@ -28,8 +28,8 @@ public class ItemService {
 		
 	public void addItem() {
 		while(true) {
-			screen.displayMessageLine("Enter new item.\nEnter item sku: ");
-			sku = userInput.getSkuInput();
+			screen.displayMessageLine("Enter new item or type 'exit' to stop.\nEnter item sku: ");
+			sku = userInput.getStringInput();
 			
 			if(!sku.equalsIgnoreCase(CANCELED)) {
 				
@@ -39,7 +39,7 @@ public class ItemService {
 					addItemToList(sku, unitPrice);
 				}
 				else {
-					screen.displayMessage("Item with SKU " + item.getSku() + " already exists.\nEnter new item or press 1 to Cancel.");
+					screen.displayMessage("Item with SKU " + item.getSku() + " already exists..");
 				}
 			}
 			else {
@@ -71,7 +71,7 @@ public class ItemService {
 		item = null; 
 		
 		for(Item temp: items) {
-			if (sku.equals(temp.getSku())) {
+			if (sku.equalsIgnoreCase(temp.getSku())) {
 				item = temp; 
 			}
 		}
@@ -85,4 +85,7 @@ public class ItemService {
 	public int getItemUnitPrice(String sku) {
 		return getItem(sku).getUnitPrice(); 
 	}
+	
+	
+	
 }

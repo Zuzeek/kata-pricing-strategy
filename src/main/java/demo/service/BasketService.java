@@ -13,7 +13,8 @@ import demo.model.UserInput;
 
 public class BasketService {
 		
-	private static final String CANCELED = "stop"; 
+	private static final String CANCELED = "exit"; 
+	private String sku; 
 	
 	private List<Basket> basketItems = new ArrayList<>(); 
 	
@@ -21,7 +22,6 @@ public class BasketService {
 	private PricingSchemeService pricingSchemeService; 
 	private Screen screen; 
 	private UserInput userInput; 
-	private Item item; 
 	
 	private List<String> scannedItems; 
 	private List<Item> availableItems; 
@@ -35,11 +35,11 @@ public class BasketService {
 	
 	public void addItem() {
 		while(true) {
-			screen.displayMessageLine("Enter item to add to basket:\nEnter item sku: ");
-			String sku = userInput.getSkuInput();
+			screen.displayMessageLine("Enter item to add to basket or type 'exit' to stop:\nEnter item sku: ");
+			sku = userInput.getStringInput();
 			
 			if(!sku.equalsIgnoreCase(CANCELED)) {
-				if(item.validateSku(sku)) {
+				if(itemService.itemExists(sku)) {
 					addItemToBasket(sku);
 				}
 				else {
@@ -53,7 +53,7 @@ public class BasketService {
 		}
 	}
 	
-	public void addItemToBasket(String sku) {
+	private void addItemToBasket(String sku) {
 		scannedItems.add(sku); 
 	}
 	
@@ -63,16 +63,6 @@ public class BasketService {
 	
 	public int getTotalItemsInBasket() {
 		return basketItems.size(); 
-	}
-	
-	public void getAvailableItems() {
-		itemService = new ItemService(); 
-		availableItems = itemService.getItems(); 
-	}
-	
-	public void getAvailablePricingStrategy() {
-		pricingSchemeService = new PricingSchemeService(); 
-		availableScheme = pricingSchemeService.getPricingSchemeList(); 
 	}
 	
 }
